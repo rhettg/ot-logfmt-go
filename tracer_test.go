@@ -44,3 +44,11 @@ func TestGlobalTracer(t *testing.T) {
 	time.Sleep(1 * time.Second)
 	idx += 1
 }
+
+func BenchmarkSpanStart(b *testing.B) {
+	t := NewTracer()
+
+	for n := 0; n < b.N; n++ {
+		t.StartSpan("benchmark")
+	}
+}
