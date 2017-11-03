@@ -3,7 +3,6 @@ package ot_logfmt
 import (
 	"os"
 	"testing"
-	"time"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/log"
@@ -34,14 +33,13 @@ func TestGlobalTracer(t *testing.T) {
 	idx := 0
 	s := opentracing.StartSpan("loop")
 
+	s.SetTag("foo", "bar")
 	s.SetTag("pid", os.Getpid())
 	s.SetTag("ppid", os.Getppid())
 
-	time.Sleep(1 * time.Second)
 	s.LogFields(log.String("event", "finish"), log.String("message", "One Loop"), log.Int("idx", idx))
 	s.Finish()
 
-	time.Sleep(1 * time.Second)
 	idx += 1
 }
 

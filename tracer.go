@@ -1,6 +1,8 @@
 package ot_logfmt
 
-import opentracing "github.com/opentracing/opentracing-go"
+import (
+	opentracing "github.com/opentracing/opentracing-go"
+)
 
 type noopSpanContext struct{}
 
@@ -12,7 +14,8 @@ type tracer struct{}
 
 func (t *tracer) StartSpan(operationName string, opts ...opentracing.StartSpanOption) opentracing.Span {
 	// TODO: propogate baggage
-	return &span{tracer: t}
+
+	return newSpan(t, operationName)
 }
 
 func (t *tracer) Inject(sm opentracing.SpanContext, format interface{}, carrier interface{}) error {
